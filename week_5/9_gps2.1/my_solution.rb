@@ -1,6 +1,6 @@
 # U2.W5: Bakery Challenge GPS
 
-# I worked on this challenge with: 
+# I worked on this challenge with: dylan richards
 
 
 
@@ -11,6 +11,44 @@
 
 
 
+def bakery_num(num_of_people, available_food)
+  menu = {"pie" => 8, "cake" => 6, "cookie" => 1}
+  pie_qty = 0
+  cake_qty = 0
+  cookie_qty = 0
+  
+  has_food = false
+
+  
+  has_food = true if menu.include?(available_food)
+  
+
+  raise ArgumentError.new("You can't make that food") if has_food == false
+
+    
+  available_food_qty = menu[available_food] # value at key index 0
+  
+  if num_of_people % available_food_qty == 0 # checks for leftovers -- num people / food quantity matches
+    num_of_food = num_of_people / available_food_qty 
+    return "You need to make #{num_of_food} #{available_food}(s)."
+    
+    
+  else # only run if num ppl ! divisible by food qty
+    while num_of_people > 0 
+      if num_of_people / menu["pie"] > 0
+        pie_qty = num_of_people / menu["pie"]
+        num_of_people = num_of_people % menu["pie"]
+      elsif num_of_people / menu["cake"] > 0
+        cake_qty = num_of_people / menu["cake"]
+        num_of_people = num_of_people % menu["cake"]
+      else
+        cookie_qty = num_of_people
+        num_of_people = 0
+      end
+    end
+    return "You need to make #{pie_qty} pie(s), #{cake_qty} cake(s), and #{cookie_qty} cookie(s)."
+    end
+  end
 
 
 
@@ -28,12 +66,14 @@ p bakery_num(130, "pie") == "You need to make 16 pie(s), 0 cake(s), and 2 cookie
 # p bakery_num(3, "apples") # this will raise an ArgumentError
 
 # You SHOULD change this driver code. Why? Because it doesn't make sense.
-p bakery_num(41, "cake") == "You need to make 5 pie(s), 0 cake(s), and 1 cookie(s)." # WHAAAAAT? I thought I said I wanted cake!
+p bakery_num(41, "cake") == "You need to make 0 pie(s), 6 cake(s), and 5 cookie(s)." # WHAAAAAT? I thought I said I wanted cake!
 
 
 
 
 #  Reflection 
 
+# This one was beyond difficult. I really had a hard time understanding what they wanted from us in the first place.
+# I didn't have a good time at all
 
 
