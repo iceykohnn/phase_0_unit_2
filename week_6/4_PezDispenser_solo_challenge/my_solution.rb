@@ -15,20 +15,68 @@
 
 
 # 2. Pseudocode
+# We need to define the initialize method to get started. Then we need to define an instance variable and set 
+# it to pull out the first 12 flavors then shuffle them. WE need a method to tell us the amount of pez_candies
+# there are in our dispenser using the .size method. We then need a method to see all of our pez to know what flavors
+#  we have available using the .join method. We need a method to add pez and raise an ArgumentError if the dispenser 
+#  is full. We need a method to allow us to get one pez to eat using the .pop method.
 
 
 
 # 3. Initial Solution
 
-class PezDispenser
- 
-# your code here!
- 
-end
+# class PezDispenser
+# 	def initialize(flavors)
+#  		@pez_candies = flavors.first(12).shuffle
+#  	end
+
+#  	def pez_count
+#  		@pez_candies.size
+#  	end
+
+#  	def see_all_pez
+# 		@pez_candies.join(" - ")
+#  	end
+
+#  	def add_pez(flavor)
+#  		raise ArgumentError.new("Can't add, son. Too many pez already!") if pez_count == 12
+# 		@pez_candies.push(flavor) 	
+#  	end
+
+#  	def get_pez
+#  		@pez_candies.pop
+#  	end
+
+# end
  
 
 
 # 4. Refactored Solution
+
+class PezDispenser
+	def initialize(flavors)
+ 		@pez_candies = flavors.first(12).shuffle
+ 	end
+
+ 	def pez_count
+ 		@pez_candies.size
+ 	end
+
+ 	def see_all_pez
+		@pez_candies.join(" - ")
+ 	end
+
+ 	def add_pez(flavor)
+ 		raise ArgumentError.new("Can't add, son. Too many pez already!") if pez_count == 12
+		@pez_candies.push(flavor) 	
+ 	end
+
+ 	def get_pez
+ 		@pez_candies.pop
+ 	end
+ 	
+end
+ 
 
 
 
@@ -53,3 +101,7 @@ puts "Now you have #{super_mario.pez_count} pez!"
 
 
 # 5. Reflection 
+# The user cases made this challenge easier than some of the others, because it guided me into my pseudocode. 
+# Who knows? Maybe I am getting better at this? I like going to check out ruby.docs to find any methods that 
+# I might need. That is usually one of my first stops now. It really makes things easier. It helped though, that some of these 
+# methods were used in earlier challenges, and I had to go look them up for those.
