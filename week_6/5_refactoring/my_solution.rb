@@ -1,26 +1,158 @@
 # U2.W6: Refactoring for Code Readability
 
 
-# I worked on this challenge [by myself, with: ].
+# I worked on this challenge Marek Pyczkowski
 
 
 # Original Solution
+class CreditCard
+  def initialize (credit_card_number)    
+    @card_number = credit_card_number.to_s 
+    @card_number_array = Array.new 
+    @alog_value = 0 
+    @valid = false 
+  end
+
+  def check_card 
+    if alog == true
+      p "Your credit card is valid!"
+    else
+      p "Not a valid credit card number!"
+    end
+  end
+
+  def alog 
+    raise ArgumentError.new("Not a valid credit card number!") if @card_number.length != 16
+    double_up
+    add_numbers
+    divide_by_10
+  end
+
+  def double_up 
+    @card_number_array = @card_number.chars.to_a
+    @card_number_array = @card_number_array.collect {|x| x.to_i}
+    i = 14
+    8.times do
+      @card_number_array.insert(i, @card_number_array[i] * 2)
+      @card_number_array.delete_at(i + 1)
+      i -= 2
+    end
+    @card_number_array
+  end
+
+  def add_numbers 
+    @card_number_array.each do |x|
+      if x < 10
+        @alog_value += x
+      else
+        double_digit = x.to_s.chars.to_a
+        double_digit.each {|y| @alog_value += y.to_i}
+      end
+    end
+    @alog_value
+  end
+
+  def divide_by_10 
+    x = @alog_value % 10
+    if x == 0
+      @valid = true
+    else
+      @valid = false
+    end
+    @valid
+  end
+
+end
+def assert
+  raise "Assertion failed!" unless yield
+end
+
+# Driver code Initial
+assert {CreditCard.new(4408041234567893).check_card == "Your credit card is valid!"}
+
+assert {CreditCard.new(4408041234567892).check_card == "Not a valid credit card number!"}
+
+
+# Driver code #1: Verifies class takes 1 argument.
+
+assert {CreditCard.instance_method(:initialize).arity == 1}
+# Driver code #2: Verifies that 'check_card' takes no arguments.
+
+assert {CreditCard.instance_method(:check_card).arity == 0}
 
 
 
 
 # Refactored Solution
+class CreditCard
+  def initialize (credit_card_number)
+    @card_number = credit_card_number
+    raise ArgumentError.new("Not a valid credit card number!") if @card_number.to_s.length != 16  #removed def alog method, so that
+    # ArgumentError is in the initialize method
+#     @card_number_array = []
+#     @alog_value =
+#     @valid = false
+  end
+
+  def check_card
+    card_number_array = []
+    card_number_array=@card_number.to_s.split("")
+    card_number_array=card_number_array.reverse
+    sum=[]
+    card_number_array.each_with_index do |element, index|
+
+      sum << if ((index+1) % 2 == 0)
+             element.to_i * 2
+           else
+             element.to_i
+          end
+     end
+
+     finalSum = 0
+     sumArray = []
+     sumArray = sum.join.split("")
+     sumArray.each do |x|
+      finalSum += x.to_i
+     end
+
+     finalSum % 10 == 0
+
+end
+end
 
 
 
+def assert
+  raise "Assertion failed!" unless yield
+end
 
+
+
+def assert
+  raise "Assertion failed!" unless yield
+end
 
 
 # DRIVER TESTS GO BELOW THIS LINE
 
+assert {CreditCard.new(4408041234567893).check_card == true}
+
+assert {CreditCard.new(4408041234567892).check_card == false}
+
+# Driver code #1: Verifies class takes 1 argument.
+
+assert {CreditCard.instance_method(:initialize).arity == 1}
+# # Driver code #2: Verifies that 'check_card' takes no arguments.
+
+assert {CreditCard.instance_method(:check_card).arity == 0}
 
 
 
 
 
-# Reflection 
+
+# Reflection
+# Refactoring is always hard for me.  I haven't yet practiced it enough to get the hang of going 
+# from one actual solution to a simpler one. I understand the purpose for refactoring, to provide 
+# cleaner, easier to understand code, that will run more efficiently, but this is going to just have to be 
+# one of those skills that gets easier with time.
